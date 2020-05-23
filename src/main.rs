@@ -16,4 +16,33 @@ fn main() {
 
     // will print acutal count for each word in text
     println!("{:?}", map); 
+    
+
+    //*** *** *** *** *** *** ***  */
+
+    // Creating a file if not exists
+    // var shadowing again
+    //nested match
+    use std::fs::File;
+    use std::io::ErrorKind;
+    
+
+    
+    let f = File::open("hello.txt");
+
+    let f = match f {
+        Ok(file) => file,
+        Err(err) => match err.kind() {
+            ErrorKind::NotFound => match File::create("hello.txt") {
+                Ok(fc) => fc,
+                Err(e) => panic!("Problem creating the file: {:?}", e),
+            },
+            other_error => {
+                panic!("Problem opening the file: {:?}", other_error)
+            }
+        },
+    };
+
+
+
 }
